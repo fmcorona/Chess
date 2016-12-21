@@ -14,9 +14,7 @@ public class Chess {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        
+    public static void main(String[] args) {        
         Board board = new Board();
         board.init();
         //board.print();
@@ -27,19 +25,6 @@ public class Chess {
         board.move(2, 2 + 4*17);
         
         board.print();
-        
-        
-        
-        /*Pawn pawn = new Pawn(2, 0, 'p', 'b');
-        
-        pawn.info();        
-        pawn.move(5, 8);        
-        pawn.info();
-        
-        System.out.println("Rank " + board.getSquare(17).getRank() + ", File"
-        + board.getSquare(17).getFile() + ", Piece = " + board.getSquare(17).piece.type);
-        
-        System.out.println("Is in Board " + board.isInBoard(3));*/
     }
     
 }
