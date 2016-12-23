@@ -11,31 +11,20 @@ package chess;
  */
 public class Board {
     private final Square square[];
-    /*private final Piece wPieces[];
-    private final Piece bPieces[];*/
     
     public Board() {
         this.square = new Square[128];
-        /*this.wPieces = new Piece[16];
-        this.bPieces = new Piece[16];*/
         
         for(int i = 0; i < 128; i++)
             this.square[i] = new Square(i);
     }
     
-    // 0x88 board
     public void init() {
         for(int i = 0; i < 8; i++) {
             // white pawns
-            /*this.wPieces[i] = new Pawn(i + 16, 'p', 'w');
-            this.square[i + 16].piece = this.wPieces[i];*/
-            
             this.square[i + 16].piece = new Pawn(i + 16, 'P', 'w');
             
             // black pawns
-            /*this.bPieces[i] = new Pawn(i + 6*16, 'p', 'b');
-            this.square[i + 6*16].piece = this.bPieces[i];*/
-            
             this.square[i + 6*16].piece = new Pawn(i + 6*16, 'p', 'b');
         }
         
@@ -84,32 +73,50 @@ public class Board {
         return getSquare(sq0x88).getPiece();
     }
     
-    public void move(int fromSquare, int toSquare) {
-        if(isInBoard(toSquare)) {
-            this.square[toSquare].piece = square[fromSquare].piece;
-            this.square[fromSquare].piece = null;
-        }
+    public void move(Player player, int fromSquare, int toSquare) {
+        Piece piece = getPiece(fromSquare);
+        boolean move_piece = false;
         
+        if(isInBoard(toSquare) && piece != null) {
+            if(isAvailable(toSquare)) {
+                if(piece.isValidMove(this, player, fromSquare, toSquare)) {
+                    move_piece = true;
+                }               
+            }
+            else if(getPiece(toSquare).color != player.color && piece.isValidCapture(player, fromSquare, toSquare)) {
+                move_piece = true;
+            }
+            
+            if(move_piece) {
+                this.square[toSquare].piece = square[fromSquare].piece;
+                this.square[fromSquare].piece = null;
+                piece.move(toSquare);
+            }
+        }
     }
     
     public boolean isInBoard(int sq0x88) {      
         return ((sq0x88 & 0x88) == 0);
     }
     
+    public boolean isAvailable(int sq0x88) {
+        return (getSquare(sq0x88).piece == null);
+    }
+    
     public void print() {
-        int i, j, cont;
+        int i, j, count;
 
         for(i = 7; i >= 0; i--) {
-            cont = 0;
+            count = 0;
             for(j = 0; j < 8; j++) {
-                cont++;
+                count++;
 
                 if(getPiece(i*16 + j) == null)
                     System.out.print("0 ");
                 else
                     System.out.print(getPiece(i*16 + j).type + " ");
                 
-                if(cont == 8)
+                if(count == 8)
                     System.out.println(" ");
             }
         }

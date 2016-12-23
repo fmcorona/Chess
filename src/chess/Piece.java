@@ -14,7 +14,8 @@ public class Piece {
     int file;
     int sq0x88;
     char type;
-    char color;
+    char color;    
+    boolean first_move;
 
     /*public Piece(int rank, int file, char type, char color) {
         this.rank = rank;
@@ -30,6 +31,7 @@ public class Piece {
         this.sq0x88 = sq0x88;
         this.type = type;
         this.color = color;
+        this.first_move = true;
     }
     
     public void setRank(int rank) {
@@ -64,16 +66,25 @@ public class Piece {
         return this.type;
     }
     
-    public void move(int rank, int file) {
+    /*public void move(int rank, int file) {
         this.rank = rank;
         this.file = file;
         this.sq0x88 = 16 * this.rank + this.file;
-    }
+    }*/
     
     public void move(int sq0x88) {
         this.rank = sq0x88 >> 4;
         this.file = sq0x88 & 7;
         this.sq0x88 = sq0x88;
+        this.first_move = false;
+    }
+    
+    public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
+        return false;
+    }
+    
+    public boolean isValidCapture(Player player, int fromSquare, int toSquare) {
+        return false;
     }
     
 }

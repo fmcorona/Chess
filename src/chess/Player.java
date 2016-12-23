@@ -10,10 +10,12 @@ package chess;
  * @author Miguel
  */
 public class Player {
-    Piece pieces[];
-
-    public Player() {
-        this.pieces = new Piece[16];
+    char color;
+    //Piece pieces[];
+    
+    public Player(char color) {
+        this.color = color;
+        //this.pieces = new Piece[16];
     }
     
 }
