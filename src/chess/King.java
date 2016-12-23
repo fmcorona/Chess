@@ -15,4 +15,15 @@ public class King extends Piece {
         super(sq0x88, type, color);
     }
     
+    @Override
+    public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
+        // -17, -16, -15, -1, +1, +15, +16, +17
+        return false;
+    }
+    
+    @Override
+    public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
+        return false;
+    }
+    
 }

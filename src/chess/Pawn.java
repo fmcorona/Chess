@@ -20,6 +20,7 @@ public class Pawn extends Piece {
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
         // +16 (white)
         // -16 (black)
+        System.out.println(" Piece = Pawn");
         int steps;
         
         if((toSquare - fromSquare) % 16 == 0) {
@@ -36,7 +37,7 @@ public class Pawn extends Piece {
     }
     
     @Override
-    public boolean isValidCapture(Player player, int fromSquare, int toSquare) {
+    public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
         // 15, 17   (white)
         // -15, -17 (black)
         int diagStep;

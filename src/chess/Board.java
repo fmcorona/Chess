@@ -45,12 +45,12 @@ public class Board {
         this.square[7*16 + 6].piece = new Knight(7*16 + 6, 'n', 'b');
         
         // white bishops
-        this.square[2].piece = new Knight(2, 'B', 'w');
-        this.square[5].piece = new Knight(5, 'B', 'w');
+        this.square[2].piece = new Bishop(2, 'B', 'w');
+        this.square[5].piece = new Bishop(5, 'B', 'w');
 
         // black bishops
-        this.square[7*16 + 2].piece = new Knight(7*16 + 2, 'b', 'b');
-        this.square[7*16 + 5].piece = new Knight(7*16 + 5, 'b', 'b');
+        this.square[7*16 + 2].piece = new Bishop(7*16 + 2, 'b', 'b');
+        this.square[7*16 + 5].piece = new Bishop(7*16 + 5, 'b', 'b');
         
         // white queen
         this.square[3].piece = new Queen(3, 'Q', 'w');
@@ -75,19 +75,19 @@ public class Board {
     
     public void move(Player player, int fromSquare, int toSquare) {
         Piece piece = getPiece(fromSquare);
-        boolean move_piece = false;
+        boolean move_piece = false, capture_piece = false;
         
         if(isInBoard(toSquare) && piece != null) {
             if(isAvailable(toSquare)) {
                 if(piece.isValidMove(this, player, fromSquare, toSquare)) {
                     move_piece = true;
-                }               
+                }
             }
-            else if(getPiece(toSquare).color != player.color && piece.isValidCapture(player, fromSquare, toSquare)) {
-                move_piece = true;
+            else if(getPiece(toSquare).color != player.color && piece.isValidCapture(this, player, fromSquare, toSquare)) {
+                capture_piece = true;
             }
             
-            if(move_piece) {
+            if(move_piece || capture_piece) {
                 this.square[toSquare].piece = square[fromSquare].piece;
                 this.square[fromSquare].piece = null;
                 piece.move(toSquare);
