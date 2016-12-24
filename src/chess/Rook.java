@@ -18,7 +18,6 @@ public class Rook extends Piece {
     @Override
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
         // -16, -1, +1, +16 (white and black)
-        System.out.println(" Piece = Rook");
         int inc = toSquare - fromSquare, steps, i;
         
         // Horizontal movement
@@ -45,12 +44,12 @@ public class Rook extends Piece {
             
             if(inc > 0) {
                 for(i = 1; i < steps; i++)
-                    if(!board.isAvailable(fromSquare + 16*i))
+                    if(!board.isAvailable(fromSquare + i*16))
                         return false;
             }
             else {
                 for(i = -1; i > steps; i--)
-                    if(!board.isAvailable(fromSquare + 16*i))
+                    if(!board.isAvailable(fromSquare + i*16))
                         return false;
             }
             

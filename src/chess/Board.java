@@ -59,10 +59,10 @@ public class Board {
         this.square[7*16 + 3].piece = new Queen(7*16 + 3, 'q', 'b');
         
         // white king
-        this.square[4].piece = new Queen(4, 'K', 'w');
+        this.square[4].piece = new King(4, 'K', 'w');
 
         // black king
-        this.square[7*16 + 4].piece = new Queen(7*16 + 4, 'k', 'b');        
+        this.square[7*16 + 4].piece = new King(7*16 + 4, 'k', 'b');        
     }
     
     public Square getSquare(int sq0x88) {

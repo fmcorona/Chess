@@ -20,7 +20,6 @@ public class Knight extends Piece {
     @Override
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
         // -33, -31, -18, -14, +14, +18, +31, +33 (white and black)
-        System.out.println(" Piece = Knight");
         int inc = toSquare - fromSquare;
         
         if(inc%14 == 0 && abs(inc/14) == 1)

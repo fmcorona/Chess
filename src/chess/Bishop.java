@@ -17,17 +17,17 @@ public class Bishop extends Piece {
     
     @Override
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
-        // -17, -15, +15, +17 (white and black)
-        System.out.println(" Piece = Bishop");
+        // -17, -15, +15, +17 (white and black);
         int inc = toSquare - fromSquare, steps, i;
         
         if(inc%15 == 0) {
             steps = inc/15;
             
             if(inc > 0) {
-                for(i = 1; i < steps; i++)
+                for(i = 1; i < steps; i++){
                     if(!board.isAvailable(fromSquare + i*15))
                         return false;
+                }
             }
             else {
                 for(i = -1; i > steps; i--)
