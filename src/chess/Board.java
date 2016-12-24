@@ -75,7 +75,7 @@ public class Board {
     
     public void move(Player player, int fromSquare, int toSquare) {
         Piece piece = getPiece(fromSquare);
-        boolean move_piece = false, capture_piece = false;
+        boolean move_piece = false, capture_piece = false, castling = false;
         
         if(isInBoard(toSquare) && piece != null) {
             if(isAvailable(toSquare)) {
@@ -91,6 +91,20 @@ public class Board {
                 this.square[toSquare].piece = square[fromSquare].piece;
                 this.square[fromSquare].piece = null;
                 piece.move(toSquare);
+                
+                // Short castling
+                if( (piece.type == 'K' || piece.type == 'k') && (toSquare == fromSquare + 2) ) {
+                    this.square[fromSquare + 1].piece = square[toSquare + 1].piece;
+                    this.square[toSquare + 1].piece = null;
+                    getPiece(fromSquare + 1).move(fromSquare + 1);
+                }
+                
+                // Long castling
+                if( (piece.type == 'K' || piece.type == 'k') && (toSquare == fromSquare - 3) ) {
+                    this.square[toSquare + 1].piece = square[toSquare - 1].piece;
+                    this.square[toSquare - 1].piece = null;
+                    getPiece(toSquare + 1).move(toSquare + 1);
+                }
             }
         }
     }
@@ -107,7 +121,9 @@ public class Board {
         int i, j, count;
 
         for(i = 7; i >= 0; i--) {
+            System.out.print((i+1) + " ");
             count = 0;
+            
             for(j = 0; j < 8; j++) {
                 count++;
 
@@ -120,6 +136,7 @@ public class Board {
                     System.out.println(" ");
             }
         }
+        System.out.println("  a b c d e f g h");
     }
     
 }

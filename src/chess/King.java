@@ -12,9 +12,13 @@ import static java.lang.Math.abs;
  * @author Miguel
  */
 public class King extends Piece {
+    boolean short_castling;
+    boolean long_castling;
     
     public King(int sq0x88, char type, char color) {
         super(sq0x88, type, color);
+        this.short_castling = false;
+        this.long_castling = false;
     }
     
     @Override
@@ -44,6 +48,20 @@ public class King extends Piece {
             
             if(abs(step) == 1 && board.isAvailable(toSquare))
                 return true;
+            
+            // Short castling
+            if(step == 2 && board.isAvailable(fromSquare + 1) && this.first_move 
+                    && board.getPiece(toSquare + 1).first_move) {
+                this.short_castling = true;
+                return true;
+            }
+            
+            // Long castling
+            if(step == -3 && this.first_move && board.getPiece(toSquare - 1).first_move 
+                    && board.isAvailable(fromSquare - 1 ) && board.isAvailable(fromSquare - 2)) {
+                this.long_castling = true;
+                return true;
+            }
         }        
         
         //Vertical movement
@@ -59,6 +77,7 @@ public class King extends Piece {
     
     @Override
     public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
+        // -17, -16, -15, -1, +1, +15, +16, +17 (white and black)
         int inc = toSquare - fromSquare, step;
         
         // Diagonal capture
