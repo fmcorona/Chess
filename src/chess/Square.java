@@ -10,10 +10,10 @@ package chess;
  * @author Miguel
  */
 public class Square {
-    int rank;
-    int file;
-    int sq0x88;
-    Piece piece;
+    private int rank;
+    private int file;
+    private int sq0x88;
+    private Piece piece;
     
     public Square(int sq0x88) {
         this.rank = sq0x88 >> 4;

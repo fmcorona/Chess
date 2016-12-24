@@ -19,6 +19,7 @@ public class Rook extends Piece {
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
         // -16, -1, +1, +16 (white and black)
         int inc = toSquare - fromSquare, steps, i;
+        player.setMovePiece(false);
         
         // Horizontal movement
         if(inc > -8 && inc < 8) {
@@ -35,6 +36,7 @@ public class Rook extends Piece {
                         return false;
             }
             
+            player.setMovePiece(true);
             return true;
         }        
         
@@ -53,6 +55,7 @@ public class Rook extends Piece {
                         return false;
             }
             
+            player.setMovePiece(true);
             return true;
         }
         
@@ -61,7 +64,13 @@ public class Rook extends Piece {
     
     @Override
     public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
-        return isValidMove(board, player, fromSquare, toSquare);
+        player.setCapturePiece(false);
+        
+        if(isValidMove(board, player, fromSquare, toSquare)) {
+            player.setCapturePiece(true);
+            return true;
+        }
+        return false;
     }
     
 }

@@ -10,12 +10,12 @@ package chess;
  * @author Miguel
  */
 public class Piece {
-    public int rank;
-    int file;
-    int sq0x88;
-    char type;
-    char color;    
-    boolean first_move;
+    private int rank;
+    private int file;
+    private int sq0x88;
+    private final char type;
+    private final char color;    
+    private boolean first_move;
     
     public Piece(int sq0x88, char type, char color) {
         this.rank = sq0x88 >> 4;
@@ -30,35 +30,39 @@ public class Piece {
         this.rank = rank;
     }
     
-    public int getRank() {
-        return this.rank;
-    }
-    
     public void setFile(int file) {
         this.file = file;
-    }
-    
-    public int getFile() {
-        return this.file;
     }
     
     public void setSquareIndex(int rank, int file) {
         this.sq0x88 = 16 * rank + file;
     }
     
+    public void setFirstMove(boolean first_move) {
+        this.first_move = first_move;
+    }
+    
+    public int getRank() {
+        return this.rank;
+    }
+    
+    public int getFile() {
+        return this.file;
+    }
+    
     public int getSquareIndex() {
         return this.sq0x88;
     }
     
-    public char getColor() {
+    public char color() {
         return this.color;
     }   
     
-    public char getType() {
+    public char type() {
         return this.type;
     }
     
-    public void move(int sq0x88) {
+    public void update(int sq0x88) {
         this.rank = sq0x88 >> 4;
         this.file = sq0x88 & 7;
         this.sq0x88 = sq0x88;
@@ -71,6 +75,10 @@ public class Piece {
     
     public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
         return false;
+    }
+    
+    public boolean isFirstMove() {
+        return this.first_move;
     }
     
 }

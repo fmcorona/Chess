@@ -19,6 +19,7 @@ public class Queen extends Piece {
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
         // -17, -16, -15, -1, +1, +15, +16, +17 (white and black)
         int inc = toSquare - fromSquare, steps, i;
+        player.setMovePiece(false);
         
         // Diagonal movement
         if(inc%15 == 0) {
@@ -35,6 +36,7 @@ public class Queen extends Piece {
                         return false;
             }
             
+            player.setMovePiece(true);
             return true;
         }
         
@@ -53,6 +55,7 @@ public class Queen extends Piece {
                         return false;
             }
             
+            player.setMovePiece(true);
             return true;
         }
         
@@ -71,6 +74,7 @@ public class Queen extends Piece {
                         return false;
             }
             
+            player.setMovePiece(true);
             return true;
         }        
         
@@ -89,6 +93,7 @@ public class Queen extends Piece {
                         return false;
             }
             
+            player.setMovePiece(true);
             return true;
         }
         
@@ -97,7 +102,13 @@ public class Queen extends Piece {
     
     @Override
     public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
-        return isValidMove(board, player, fromSquare, toSquare);
+        player.setCapturePiece(false);
+        
+        if(isValidMove(board, player, fromSquare, toSquare)){
+            player.setCapturePiece(true);
+            return true;
+        }
+        return false;
     }
     
 }

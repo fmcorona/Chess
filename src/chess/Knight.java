@@ -21,6 +21,7 @@ public class Knight extends Piece {
     public boolean isValidMove(Board board, Player player, int fromSquare, int toSquare) {
         // -33, -31, -18, -14, +14, +18, +31, +33 (white and black)
         int inc = toSquare - fromSquare;
+        player.setMovePiece(true);
         
         if(inc%14 == 0 && abs(inc/14) == 1)
             return true;
@@ -34,11 +35,19 @@ public class Knight extends Piece {
         if(inc%33 == 0 && abs(inc/33) == 1)
             return true;
         
+        player.setMovePiece(false);
         return false;
     }
     
     @Override
     public boolean isValidCapture(Board board, Player player, int fromSquare, int toSquare) {
-        return isValidMove(board, player, fromSquare, toSquare);
+        player.setCapturePiece(false);
+        
+        if(isValidMove(board, player, fromSquare, toSquare)) {
+            player.setCapturePiece(true);
+            return true;
+        }
+            
+        return false;
     }
 }
