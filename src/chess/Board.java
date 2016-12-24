@@ -75,7 +75,7 @@ public class Board {
     
     public void move(Player player, int fromSquare, int toSquare) {
         Piece piece = getPiece(fromSquare);
-        boolean move_piece = false, capture_piece = false, castling = false;
+        boolean move_piece = false, capture_piece = false;
         
         if(isInBoard(toSquare) && piece != null) {
             if(isAvailable(toSquare)) {
@@ -121,7 +121,7 @@ public class Board {
         int i, j, count;
 
         for(i = 7; i >= 0; i--) {
-            System.out.print((i+1) + " ");
+            System.out.print((i + 1) + " ");
             count = 0;
             
             for(j = 0; j < 8; j++) {

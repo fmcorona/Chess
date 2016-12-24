@@ -12,13 +12,13 @@ import static java.lang.Math.abs;
  * @author Miguel
  */
 public class King extends Piece {
-    boolean short_castling;
-    boolean long_castling;
+    //boolean short_castling;
+    //boolean long_castling;
     
     public King(int sq0x88, char type, char color) {
         super(sq0x88, type, color);
-        this.short_castling = false;
-        this.long_castling = false;
+        //this.short_castling = false;
+        //this.long_castling = false;
     }
     
     @Override
@@ -52,19 +52,19 @@ public class King extends Piece {
             // Short castling
             if(step == 2 && board.isAvailable(fromSquare + 1) && this.first_move 
                     && board.getPiece(toSquare + 1).first_move) {
-                this.short_castling = true;
+                //this.short_castling = true;
                 return true;
             }
             
             // Long castling
             if(step == -3 && this.first_move && board.getPiece(toSquare - 1).first_move 
                     && board.isAvailable(fromSquare - 1 ) && board.isAvailable(fromSquare - 2)) {
-                this.long_castling = true;
+                //this.long_castling = true;
                 return true;
             }
         }        
         
-        //Vertical movement
+        // Vertical movement
         if(inc%16 == 0) {
             step = inc/16;
             
@@ -104,7 +104,7 @@ public class King extends Piece {
                 return true;
         }        
         
-        //Vertical movement
+        // Vertical capture
         if(inc%16 == 0) {
             step = inc/16;
             
