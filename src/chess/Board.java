@@ -10,7 +10,7 @@ package chess;
  * @author Miguel
  */
 public class Board {
-    private Square square[];
+    private final Square square[];
     private int last_move_fromSquare;
     private int last_move_toSquare;
     private int sq0x88_en_passant;
@@ -131,49 +131,35 @@ public class Board {
         return (sq0x88 >= 48 && sq0x88 <= 55);
     }
     
-    public void movePiece(Piece piece, int fromSquare, int toSquare) {
-        setPiece(getPiece(fromSquare), toSquare);
-        removePiece(fromSquare);
-
-        piece.update(toSquare);
-        setLastMoveFromSquare(fromSquare);
-        setLastMoveToSquare(toSquare);
-    }
-    
-    public void capturePiece(Piece piece, int fromSquare, int toSquare) {
-        movePiece(piece, fromSquare, toSquare);
-    }
-    
-    public void shortCastling(Piece piece, int fromSquare, int toSquare) {
-        setPiece(getPiece(fromSquare), toSquare);
-        removePiece(fromSquare);
-
-        piece.update(toSquare);
-        setLastMoveFromSquare(fromSquare);
-        setLastMoveToSquare(toSquare);
+    public void movePiece(int fromSquare, int toSquare) {
+        Piece piece = getPiece(fromSquare);
         
-        setPiece(getPiece(toSquare + 1), fromSquare + 1);
-        removePiece(toSquare + 1);
-        getPiece(fromSquare + 1).update(fromSquare + 1);
-    }
-    
-    public void longCastling(Piece piece, int fromSquare, int toSquare) {
-        setPiece(getPiece(fromSquare), toSquare);
+        setPiece(piece, toSquare);
         removePiece(fromSquare);
-
         piece.update(toSquare);
+        
         setLastMoveFromSquare(fromSquare);
         setLastMoveToSquare(toSquare);
-        
-        setPiece(getPiece(toSquare - 1), toSquare + 1);
-        removePiece(toSquare - 1);
-        getPiece(toSquare + 1).update(toSquare + 1);
     }
     
-    public void enPassant(Player player) {
+    public void capturePiece(int fromSquare, int toSquare) {
+        movePiece(fromSquare, toSquare);
+    }
+    
+    public void shortCastling(int fromSquare, int toSquare) {
+        movePiece(toSquare + 1, fromSquare + 1); // Move rook
+        movePiece(fromSquare, toSquare);         // Move king 
+    }
+    
+    public void longCastling(int fromSquare, int toSquare) {
+        movePiece(toSquare - 1, toSquare + 1);  // Move rook
+        movePiece(fromSquare, toSquare);        // Move king
+    }
+    
+    public void enPassant(int fromSquare, int toSquare) {
+        movePiece(fromSquare, toSquare);        
         removePiece(squareCaptureEnPassant());
         setSquareCaptureEnPassant(-1);
-        player.setEnPassant(false);
     }
     
     public void print() {

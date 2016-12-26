@@ -50,16 +50,16 @@ public class Player {
         this.long_castling = long_castling;
     }
     
-    public char color() {
-        return this.color;
-    }
-    
     public boolean isWhite() {
         return this.color == 'w';
     }
     
     public boolean isBlack() {
         return this.color == 'b';
+    }
+    
+    public boolean isMyPiece(Piece piece) {
+        return piece.color() == this.color;
     }
     
     public boolean movePiece() {
@@ -82,33 +82,35 @@ public class Player {
         return this.long_castling;
     }
     
-    public boolean move(Board board, int fromSquare, int toSquare) {
+    public void move(Board board, int fromSquare, int toSquare) {
         Piece piece = board.getPiece(fromSquare);
         
-        if(board.isInBoard(toSquare) && piece != null) {
+        if(board.isInBoard(toSquare) && piece != null && isMyPiece(piece)) {
             if(board.isAvailable(toSquare)) {
                 if(piece.isValidMove(board, this, fromSquare, toSquare)) {
                     if(movePiece()) {
                         setMovePiece(false);
-                        board.movePiece(piece, fromSquare, toSquare);
+                        board.movePiece(fromSquare, toSquare);
                     }
                     else if(shortCastling()) {
                         setShortCastling(false);
-                        board.shortCastling(piece, fromSquare, toSquare);
+                        board.shortCastling(fromSquare, toSquare);
                     }
                     else if(longCastling()) {
                         setLongCastling(false);
-                        board.longCastling(piece, fromSquare, toSquare);
+                        board.longCastling(fromSquare, toSquare);
+                    }
+                    else if(enPassant()) {
+                        setEnPassant(false);
+                        board.enPassant(fromSquare, toSquare);
                     }
                 }
             }
-            else if(board.colorPiece(toSquare) != color() && piece.isValidCapture(board, this, fromSquare, toSquare)) {
+            else if(!isMyPiece(board.getPiece(toSquare)) && piece.isValidCapture(board, this, fromSquare, toSquare)) {
                 setCapturePiece(false);
-                board.capturePiece(piece, fromSquare, toSquare);
+                board.capturePiece(fromSquare, toSquare);
             }
         }
-        
-        return false;
     }
     
 }
